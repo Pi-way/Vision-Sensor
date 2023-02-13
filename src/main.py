@@ -120,7 +120,7 @@ while True:
 
 
         ActualAccel = (RequestedRight - OutputRight) / DeltaTime
-        
+
         if abs(ActualAccel) > MaxAccel:
             OutputRight += MaxAccel * DeltaTime * GetSign(ActualAccel)
         else:
