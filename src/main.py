@@ -20,7 +20,8 @@ Vis = Vision(Ports.PORT18, 50, ball)
 Right = Motor(Ports.PORT2, GearSetting.RATIO_18_1, True)
 Left = Motor(Ports.PORT1, GearSetting.RATIO_18_1)
 
-Lift = Motor(Ports.PORT14, GearSetting.RATIO_18_1)
+Lift = Motor(Ports.PORT20, GearSetting.RATIO_18_1)
+Claw = Motor(Ports.PORT19, GearSetting.RATIO_18_1)
 #---------------Functions----------------------
 
 def GetSign(n):
@@ -58,10 +59,12 @@ def get_expected_x(distance):
     return (a / (distance + b)) + c
 
 class Robot:
-    def __init__(self, right_motor, left_motor, max_accel) -> None:
+    def __init__(self, right_motor: Motor, left_motor: Motor, claw_motor: Motor, lift_motor: Motor, max_accel, turn_correction, porportional_drive) -> None:
 
         self.rightMotor = right_motor
         self.leftMotor = left_motor
+        self.lift = lift_motor
+        self.claw = claw_motor
 
         self.maxAccel = max_accel
 
@@ -70,6 +73,9 @@ class Robot:
 
         self.targetLeft = 0
         self.currentLeft = 0
+
+        self.turnCorrection = turn_correction
+        self.porportionalDrive = porportional_drive
 
     def setRightVel(self, velocity: float) -> None:
         self.targetRight = velocity
@@ -101,10 +107,25 @@ class Robot:
         Lift.spin_to_position(-60,DEGREES)
 
     def clawOpen(self):
-        pass
 
-    def clawClosed(self):
-        pass
+        self.claw.spin(REVERSE, 6, VoltageUnits.VOLT)
+
+        while abs(self.claw.current(CurrentUnits.AMP)) < 1.5:
+            wait(20, MSEC)
+            #do nothing
+
+        self.claw.spin(FORWARD, 0, VoltageUnits.VOLT)
+
+
+    def clawClose(self):
+        
+        self.claw.spin(FORWARD, 6, VoltageUnits.VOLT)
+
+        while abs(self.claw.current(CurrentUnits.AMP)) < 1.5:
+            wait(20, MSEC)
+            #do nothing
+
+        self.claw.spin(FORWARD, 0.5, VoltageUnits.VOLT)
 
 
 def find_Ball():
@@ -230,8 +251,8 @@ def go_to_ball(robot: Robot):
 
         else:
 
-            RequestedRight = ballData[0] * porportional_drive - ballData[1] * turn_correction
-            RequestedLeft = ballData[0] * porportional_drive + ballData[1] * turn_correction
+            RequestedRight = ballData[0] * robot.porportionalDrive - ballData[1] * robot.turnCorrection
+            RequestedLeft = ballData[0] * robot.porportionalDrive + ballData[1] * robot.turnCorrection
 
 
 def pick_up_ball(robot: Robot):
@@ -245,7 +266,7 @@ def drop_ball_in_basket(robot: Robot):
 
 if __name__ == "main":
 
-    robot = Robot(Right, Left, 300)
+    robot = Robot(Right, Left, Claw, Lift, 300, 0.25, 60)
 
     while True:
         go_to_ball(robot)
