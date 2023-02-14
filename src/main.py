@@ -94,13 +94,20 @@ class Robot:
         self.rightMotor.set_velocity(self.currentLeft, PERCENT)
 
 def find_Ball():
+
     Vis.take_snapshot(ball)
     object = Vis.largest_object()
+
     if object:
+
         distance = get_dist(object.centerY, object.width)
+        expectedX = get_expected_x(distance)
         differenceOfX = object.centerX - expectedX
-        return(distance, differenceOfX)
+
+        return (distance, differenceOfX)
+
     else:
+
         return False
 
 # while True:
@@ -195,20 +202,35 @@ def find_Ball():
 #         null = Vis.take_snapshot(ball)
 #         object = Vis.largest_object()
 
-def go_to_ball():
+def go_to_ball(robot: Robot):
+    
+    ballWithinReach = False
+
+    while not ballWithinReach:
+
+        ballData = find_Ball()
+
+        if not ballData:
+            robot.setRightVel(-25)
+            robot.setLeftVel(25)
+
+
+
+def pick_up_ball(robot: Robot):
     pass
 
-def pick_up_ball():
+def go_to_basket(robot: Robot):
     pass
 
-def go_to_basket():
+def drop_ball_in_basket(robot: Robot):
     pass
 
-def drop_ball_in_basket():
-    pass
+if __name__ == "main":
 
-while True:
-    go_to_ball()
-    pick_up_ball()
-    go_to_basket()
-    drop_ball_in_basket()
+    robot = Robot(Right, Left, 300)
+
+    while True:
+        go_to_ball()
+        pick_up_ball()
+        go_to_basket()
+        drop_ball_in_basket()
