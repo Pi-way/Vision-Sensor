@@ -259,7 +259,7 @@ def pick_up_ball(robot: Robot):
     robot.liftUp()
     robot.clawOpen()
     robot.liftDown()
-    robot.clawClosed()
+    robot.clawClose()
     robot.liftUp()
 
 def go_to_basket(robot: Robot):
