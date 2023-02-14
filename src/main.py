@@ -20,6 +20,7 @@ Vis = Vision(Ports.PORT18, 50, ball)
 Right = Motor(Ports.PORT2, GearSetting.RATIO_18_1, True)
 Left = Motor(Ports.PORT1, GearSetting.RATIO_18_1)
 
+Lift = Motor(Ports.PORT14, GearSetting.RATIO_18_1, )
 #---------------Functions----------------------
 
 def GetSign(n):
@@ -214,8 +215,6 @@ def go_to_ball(robot: Robot):
             robot.setRightVel(-25)
             robot.setLeftVel(25)
 
-
-
 def pick_up_ball(robot: Robot):
     pass
 
@@ -230,7 +229,7 @@ if __name__ == "main":
     robot = Robot(Right, Left, 300)
 
     while True:
-        go_to_ball()
-        pick_up_ball()
-        go_to_basket()
-        drop_ball_in_basket()
+        go_to_ball(robot)
+        pick_up_ball(robot)
+        go_to_basket(robot)
+        drop_ball_in_basket(robot)
