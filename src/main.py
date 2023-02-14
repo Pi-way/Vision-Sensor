@@ -20,7 +20,9 @@ Vis = Vision(Ports.PORT18, 50, ball)
 Right = Motor(Ports.PORT2, GearSetting.RATIO_18_1, True)
 Left = Motor(Ports.PORT1, GearSetting.RATIO_18_1)
 
-Lift = Motor(Ports.PORT14, GearSetting.RATIO_18_1)
+Lift = Motor(Ports.PORT20, GearSetting.RATIO_18_1)
+
+Claw = Motor(Ports.PORT19, GearSetting.RATIO_18_1)
 #---------------Functions----------------------
 
 def GetSign(n):
@@ -101,10 +103,8 @@ class Robot:
         Lift.spin_to_position(-60,DEGREES)
 
     def clawOpen(self):
-        pass
 
     def clawClosed(self):
-        pass
 
 
 def find_Ball():
@@ -229,13 +229,17 @@ def go_to_ball(robot: Robot):
             robot.setLeftVel(25)
 
 def pick_up_ball(robot: Robot):
-    pass
+    robot.liftUp()
+    robot.clawOpen()
+    robot.liftDown()
+    robot.clawClosed()
+    robot.liftUp()
 
 def go_to_basket(robot: Robot):
     pass
 
 def drop_ball_in_basket(robot: Robot):
-    pass
+    robot.clawOpen()
 
 if __name__ == "main":
 
