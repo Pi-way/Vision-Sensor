@@ -103,95 +103,112 @@ def find_Ball():
     else:
         return False
 
-while True:
+# while True:
 
-    #find ball
+#     #find ball
 
-    Right.spin(FORWARD)
-    Left.spin(FORWARD)
+#     Right.spin(FORWARD)
+#     Left.spin(FORWARD)
 
-    Right.set_velocity(-10, PERCENT)
-    Left.set_velocity(10, PERCENT)
+#     Right.set_velocity(-10, PERCENT)
+#     Left.set_velocity(10, PERCENT)
 
-    Vis.take_snapshot(ball)
-    object = Vis.largest_object()
+#     Vis.take_snapshot(ball)
+#     object = Vis.largest_object()
 
-    while not object:
-        Vis.take_snapshot(ball)
-        object = Vis.largest_object()
-        wait(20, MSEC)
+#     while not object:
+#         Vis.take_snapshot(ball)
+#         object = Vis.largest_object()
+#         wait(20, MSEC)
 
-    # Turn to ball
-    brain.screen.set_pen_color(Color.YELLOW)
+#     # Turn to ball
+#     brain.screen.set_pen_color(Color.YELLOW)
 
-    turn_correction = 0.25
-    porportional_drive = 60
+#     turn_correction = 0.25
+#     porportional_drive = 60
 
-    OutputRight = 0
-    OutputLeft = 0
+#     OutputRight = 0
+#     OutputLeft = 0
 
-    ActualAccel = 0
-    MaxAccel = 300
+#     ActualAccel = 0
+#     MaxAccel = 300
 
-    RequestedRight = 0
-    RequestedLeft = 0
+#     RequestedRight = 0
+#     RequestedLeft = 0
 
-    ThisTime = brain.timer.time(SECONDS)
-    LastTime = ThisTime
+#     ThisTime = brain.timer.time(SECONDS)
+#     LastTime = ThisTime
 
-    DeltaTime = 0.0
+#     DeltaTime = 0.0
 
-    wait(20, MSEC)
+#     wait(20, MSEC)
 
-    while True:
+#     while True:
 
-        LastTime = ThisTime
-        ThisTime = brain.timer.time(SECONDS)
+#         LastTime = ThisTime
+#         ThisTime = brain.timer.time(SECONDS)
 
-        DeltaTime = ThisTime - LastTime
+#         DeltaTime = ThisTime - LastTime
 
-        #get expected x
-        if object:
-            distance = get_dist(object.centerY, object.width)
-            expectedX = get_expected_x(distance)
+#         #get expected x
+#         if object:
+#             distance = get_dist(object.centerY, object.width)
+#             expectedX = get_expected_x(distance)
 
-            differenceOfX = object.centerX - expectedX
+#             differenceOfX = object.centerX - expectedX
 
-            RequestedRight = distance * porportional_drive - differenceOfX * turn_correction
-            RequestedLeft = distance * porportional_drive + differenceOfX * turn_correction
+#             RequestedRight = distance * porportional_drive - differenceOfX * turn_correction
+#             RequestedLeft = distance * porportional_drive + differenceOfX * turn_correction
 
-        else:
-            RequestedRight = -10
-            RecursionError = 10
+#         else:
+#             RequestedRight = -10
+#             RecursionError = 10
 
 
 
-        ActualAccel = (RequestedRight - OutputRight) / DeltaTime
+#         ActualAccel = (RequestedRight - OutputRight) / DeltaTime
         
-        if abs(ActualAccel) > MaxAccel:
-            OutputRight += MaxAccel * DeltaTime * GetSign(ActualAccel)
-        else:
-            OutputRight = RequestedRight
+#         if abs(ActualAccel) > MaxAccel:
+#             OutputRight += MaxAccel * DeltaTime * GetSign(ActualAccel)
+#         else:
+#             OutputRight = RequestedRight
 
 
-        ActualAccel = (RequestedLeft - OutputLeft) / DeltaTime
-        if abs(ActualAccel) > MaxAccel:
-            OutputLeft += MaxAccel * DeltaTime *  GetSign(ActualAccel)
-        else:
-            OutputLeft = RequestedLeft
+#         ActualAccel = (RequestedLeft - OutputLeft) / DeltaTime
+#         if abs(ActualAccel) > MaxAccel:
+#             OutputLeft += MaxAccel * DeltaTime *  GetSign(ActualAccel)
+#         else:
+#             OutputLeft = RequestedLeft
 
-        Right.set_velocity(OutputRight, PERCENT)
-        Left.set_velocity(OutputLeft, PERCENT)
+#         Right.set_velocity(OutputRight, PERCENT)
+#         Left.set_velocity(OutputLeft, PERCENT)
 
-        wait(20, MSEC)
+#         wait(20, MSEC)
 
-        brain.screen.clear_screen()
-        brain.screen.set_cursor(1, 1)
+#         brain.screen.clear_screen()
+#         brain.screen.set_cursor(1, 1)
 
-        brain.screen.draw_rectangle(object.originX, object.originY, object.width, object.height)
+#         brain.screen.draw_rectangle(object.originX, object.originY, object.width, object.height)
 
-        brain.screen.print(round(distance, 3))
+#         brain.screen.print(round(distance, 3))
 
-        null = Vis.take_snapshot(ball)
-        object = Vis.largest_object()
+#         null = Vis.take_snapshot(ball)
+#         object = Vis.largest_object()
 
+def go_to_ball():
+    pass
+
+def pick_up_ball():
+    pass
+
+def go_to_basket():
+    pass
+
+def drop_ball_in_basket():
+    pass
+
+while True:
+    go_to_ball()
+    pick_up_ball()
+    go_to_basket()
+    drop_ball_in_basket()
