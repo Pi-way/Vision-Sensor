@@ -215,6 +215,12 @@ def go_to_ball(robot: Robot):
             robot.setRightVel(-25)
             robot.setLeftVel(25)
 
+        else:
+
+            RequestedRight = ballData[0] * porportional_drive - ballData[1] * turn_correction
+            RequestedLeft = ballData[0] * porportional_drive + ballData[1] * turn_correction
+
+
 def pick_up_ball(robot: Robot):
     pass
 
