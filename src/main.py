@@ -20,7 +20,7 @@ Vis = Vision(Ports.PORT18, 50, ball)
 Right = Motor(Ports.PORT2, GearSetting.RATIO_18_1, True)
 Left = Motor(Ports.PORT1, GearSetting.RATIO_18_1)
 
-Lift = Motor(Ports.PORT14, GearSetting.RATIO_18_1, )
+Lift = Motor(Ports.PORT14, GearSetting.RATIO_18_1)
 #---------------Functions----------------------
 
 def GetSign(n):
@@ -93,6 +93,19 @@ class Robot:
 
         self.rightMotor.set_velocity(self.currentRight, PERCENT)
         self.rightMotor.set_velocity(self.currentLeft, PERCENT)
+
+    def liftDown(self):
+        Lift.spin_to_position(-608,DEGREES)
+
+    def liftUp(self):
+        Lift.spin_to_position(-60,DEGREES)
+
+    def clawOpen(self):
+        pass
+
+    def clawClosed(self):
+        pass
+
 
 def find_Ball():
 
